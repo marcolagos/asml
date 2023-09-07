@@ -1,0 +1,672 @@
+\documentclass{article}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{comment}
+\usepackage{tikz}
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+\usetikzlibrary{automata,positioning}
+
+%
+% Basic Document Settings
+%
+
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=0in
+\textwidth=6.5in
+\textheight=9.0in
+\headsep=0.25in
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+% \lhead{\hmwkAuthorName}
+\lhead{\hmwkClass\ (\hmwkClassInstructor): \hmwkTitle}
+% \chead{\hmwkClass\ (\hmwkClassInstructor): \hmwkTitle}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0.4pt}
+
+\setlength\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\newcommand{\enterProblemHeader}[1]{
+    \nobreak\extramarks{}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+}
+
+\newcommand{\exitProblemHeader}[1]{
+    \nobreak\extramarks{Problem \arabic{#1} (continued)}{Problem \arabic{#1} continued on next page\ldots}\nobreak{}
+    \stepcounter{#1}
+    \nobreak\extramarks{Problem \arabic{#1}}{}\nobreak{}
+}
+
+\setcounter{secnumdepth}{0}
+\newcounter{partCounter}
+\newcounter{homeworkProblemCounter}
+\setcounter{homeworkProblemCounter}{1}
+\nobreak\extramarks{Problem \arabic{homeworkProblemCounter}}{}\nobreak{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\newenvironment{homeworkProblem}[1][-1]{
+    \ifnum#1>-1
+        \setcounter{homeworkProblemCounter}{#1}
+    \fi
+    \section{Problem \arabic{homeworkProblemCounter}}
+    \setcounter{partCounter}{1}
+    \enterProblemHeader{homeworkProblemCounter}
+}{
+    \exitProblemHeader{homeworkProblemCounter}
+}
+
+%
+% Homework Details
+%   - Title
+%   - Due date
+%   - Class
+%   - Section/Time
+%   - Instructor
+%   - Author
+%
+
+\newcommand{\hmwkTitle}{Homework\ \#1}
+\newcommand{\hmwkDueDate}{September 5, 2023}
+\newcommand{\hmwkClass}{Statistical Machine Learning}
+\newcommand{\hmwkClassTime}{}
+\newcommand{\hmwkClassInstructor}{Professor Devika Subramanian}
+\newcommand{\hmwkAuthorName}{\textbf{Marco Lagos}}
+
+%
+% Title Page
+%
+
+\title{
+    \vspace{2in}
+    \textmd{\textbf{\hmwkClass:\ \hmwkTitle}}\\
+    % \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate\ at 11:59pm}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor\ \hmwkClassTime}}
+    \vspace{3in}
+}
+
+\author{\hmwkAuthorName}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\newcommand{\alg}[1]{\textsc{\bfseries \footnotesize #1}}
+
+% For derivatives
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\newcommand{\pderiv}[2]{\frac{\partial}{\partial #1} (#2)}
+
+% Integral dx
+\newcommand{\dx}{\mathrm{d}x}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Bias}{\mathrm{Bias}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\begin{homeworkProblem}
+See \textbf{sampler.ipynb}
+\end{homeworkProblem}
+
+
+\begin{homeworkProblem}
+    Prove that the sum of two independent Poisson random variables is also a Poisson random variable. \\
+
+    % \begin{enumerate}
+    %     \item \(f(n) = n^2 + n + 1\), \(g(n) = 2n^3\)
+    %     \item \(f(n) = n\sqrt{n} + n^2\), \(g(n) = n^2\)
+    %     \item \(f(n) = n^2 - n + 1\), \(g(n) = n^2 / 2\)
+    % \end{enumerate}
+
+    \textbf{Solution}
+
+    Consider two independent random variables s.t. $X \sim Poi(\lambda_1)$ and $Y \sim Poi(\lambda_2)$. Let $Z = X + Y$.
+    
+    Let $\Omega_X = \Omega_Y = \Omega_Z = \{1,2,...\}$. The convolution formula for discrete distributions is (for $n \in \Omega_Z$ and $i \leq n$):
+
+    $$
+        p_Z(n) = \sum_{i = 0}^{n} p_X(i)p_Y(n-i)
+    $$
+
+    In addition, the binomial theorem is as follows: 
+
+    $$
+        (a + b)^n = \sum_{k=0}^{n} \frac{n!}{k!(n-k)!} a^{n-k} b^k
+    $$
+    \\
+    From the following, we can conclude that $Z \sim Poi(\lambda_1 + \lambda_2)$:
+    \[
+        \begin{split}
+            p_Z(n) &= \sum_{i = 0}^{n} p_X(i)p_Y(n-i)
+            \\
+            &= \sum_{i = 0}^{n} e^{-\lambda_1} \frac{\lambda_1^i}{i!} \cdot e^{-\lambda_2} \frac{\lambda_2^{n-i}}{(n-i)!}
+            \\
+            &= e^{-(\lambda_1 + \lambda_2)} \sum_{i = 0}^{n} \frac{\lambda_1^i\lambda_2^{n-i}}{i!(n-i)!}
+            \\
+            &= \frac{e^{-(\lambda_1 + \lambda_2)}}{n!} \sum_{i = 0}^{n} \frac{n!}{i!(n-i)!} \lambda_1^i\lambda_2^{n-i}
+            \\
+            &= \frac{e^{-(\lambda_1 + \lambda_2)}}{n!} (\lambda_1 + \lambda_2)^n
+        \end{split}
+    \]
+    
+\end{homeworkProblem}
+
+\pagebreak
+
+\begin{homeworkProblem}
+    Let $A, B, C$ be events. Show that if $P(A|B, C) > P(A|B)$ then $ P(A|B, C^c) < P(A | B)$. Here $C^c$ denotes the complement of $C$. Assume that each event we are conditioning on has positive probability. \\
+
+    \textbf{Solution}
+    \\
+    By the conditional probability formula:
+    $$
+        P(A|B, C) = \frac{P(A \cap B \cap C)}{P(B \cap C)}
+    $$
+    $$
+        P(A|B) = \frac{P(A \cap B)}{P(B)}
+    $$
+    And by the complement rule:
+    $$
+        P(C^c) = 1 - P(C)
+    $$
+    From the following, we can conclude that $P(A|B, C) > P(A|B) \rightarrow P(A|B, C^c) < P(A | B)$:
+    \[
+        \begin{split}
+            P(A|B, C) &> P(A|B)
+            \\
+            \frac{P(A \cap B \cap C)}{P(B \cap C)} &> \frac{P(A \cap B)}{P(B)}
+            \\
+            P(A \cap B \cap C) &> P(A \cap B)
+            \\
+        \end{split}
+    \]
+    
+    Substituting $P(A \cap B \cap C^c) = P(A \cap B) - P(A \cap B \cap C)$:
+    \[
+        \begin{split}
+            P(A \cap B \cap C^c) &< P(A \cap B)
+            \\
+            \frac{P(A \cap B \cap C^c)}{P(B)} &< \frac{P(A \cap B)}{P(B)}
+            \\
+            \frac{P(A \cap B \cap C^c)}{P(B)} &< P(A|B)
+            \\
+            P(A|B, C^c) &< P(A|B)
+        \end{split}
+    \]
+            
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    Consider the vectors $u = \begin{bmatrix} 1 & 2 \end{bmatrix}^T$ and $v = \begin{bmatrix} 2 & 3 \end{bmatrix}^T$. Define the matrix $M = uv^T$. Compute the eigenvalues and eigenvectors of $M$.\\
+
+    \textbf{Solution}
+    \\
+    Computing $M$:
+    \[
+        \begin{split}
+            M &= uv^T \\
+            &= \begin{bmatrix} 1 \\ 2 \end{bmatrix} \begin{bmatrix} 2 & 3 \end{bmatrix}
+            \\
+            &= \begin{bmatrix} 2 & 3 \\ 4 & 6 \end{bmatrix}
+            \\
+        \end{split}
+    \]
+
+    Getting the eigenvalues from the characteristic equation:
+    \[
+        \begin{split}
+            det(A - \lambda I) &= 0
+            \\
+            det \begin{bmatrix} 2 - \lambda & 3 \\ 4 & 6 - \lambda \end{bmatrix} &= 0 \\
+            (2 - \lambda)(6 - \lambda) - 3 \cdot 4 &= 0
+            \\
+            12 - 8\lambda + \lambda^2 - 12 &= 0
+            \\
+            \lambda^2 - 8\lambda &= 0
+            \\
+            \lambda(\lambda - 8) &= 0
+            \\
+            \lambda_1 = 8, \lambda_2 &= 0
+            \\
+        \end{split}
+    \]
+    The eigenvalues are then $\lambda_1 = 8$ and $\lambda_2 = 0$. Now, by solving the equation $(A - \lambda I)v = 0$ for each eigenvalue, we find the corresponding eigenvectors:
+    $$
+        v_{\lambda_1} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}
+    $$
+    $$
+        v_{\lambda_2} = \begin{bmatrix} -3 \\ 2 \end{bmatrix}
+    $$
+    
+    
+\end{homeworkProblem}
+
+% \pagebreak
+
+\begin{homeworkProblem}
+    Let $A \in \mathbb{R}^{n \times n}$ be symmetric matrix. We say that $A$ is positive semi-definite if $\forall x \in \mathbb{R}^n, x^TAx \geq 0$. Show that if $A$ is positive semi-definite, then all eigenvalues of $A$ are non-negative.\\
+
+    \textbf{Solution}\\ 
+
+    Consider an eigenvector $v$ of $A$ so that $Av = \lambda v$:
+    \[
+        \begin{split}
+            Av &= \lambda v
+            \\
+            v^TAv &= \lambda v^Tv
+            \\
+        \end{split}
+    \]
+    Since $A$ is positive semi-definite, we know that $x^TAx \geq 0$. In addition, $v^Tv$ is the squared norm of vector $v$ so $v^Tv \geq 0$. 
+    $$
+        x^TAx \geq 0
+    $$
+    $$
+        \lambda v^Tv \geq 0
+    $$
+    If $\lambda$ were negative then $\lambda v^Tv$ would also be negative since $v^Tv$ is non-negative, but we have already established that $v^Tv \geq 0$. Therefore, we can conclude that all eigenvalues of $A$ are non-negative.
+\end{homeworkProblem}
+
+% \pagebreak
+
+\begin{homeworkProblem}
+    Provide one example for each of the following cases, where $A, B$ are $2 \times 2$ matrices.
+
+    \begin{enumerate}
+        \item $(A + B)^2 \neq A^2 + 2AB + B^2$
+        \item $AB = 0, A \neq 0, B \neq 0$
+    \end{enumerate}
+
+    \textbf{Solution} \\
+    1. For $(A + B)^2 \neq A^2 + 2AB + B^2$, the left side of the equation is \((A+B)^2\):
+    \[
+        \begin{split}
+            (A+B)^2 &= (A+B)(A+B)
+            \\
+            &= A(A+B) + B(A+B)
+            \\
+            &= A^2 + AB + BA + B^2
+            \\
+        \end{split}
+    \]
+    We must find a matrix such that $AB \neq BA$. It is clear with these two matrices:
+    $$
+        A = \begin{bmatrix}
+            1 & 1 \\ 1 & 1
+        \end{bmatrix}
+    $$
+    $$
+        B = \begin{bmatrix}
+                -1 & -1 \\ 1 & 1
+            \end{bmatrix}
+    $$
+    2. For $AB = 0, A \neq 0, B \neq 0$, we simply need to find a matrix that cancels each other out during matrix multiplication:
+    $$
+        A = \begin{bmatrix}
+            1 & 1 \\ 1 & 1
+        \end{bmatrix}
+    $$
+    $$
+        B = \begin{bmatrix}
+                -1 & -1 \\ 1 & 1
+            \end{bmatrix}
+    $$
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    Let $u$ denote a real vector normalized to unit length. That is, $u^Tu = 1$. Show that $A = I - 2uu^T$ is orthogonal, i.e., $A^TA = I$.\\
+
+    \textbf{Solution}\\
+    \[
+        \begin{split}
+            A^TA &= (I - 2uu^T)^T(I - 2uu^T)
+            \\
+            &= (I^T - (2uu^T)^T)(I - 2uu^T)
+            \\
+            &= (I - 2uu^T)(I - 2uu^T)
+            \\
+            &= I^2 -2Iuu^T -2uu^TI + 4(uu^T)^2
+            \\
+            &= I^2 -4uu^T + 4(uu^T)^2
+            \\
+            &= I^2 -4 + 4
+            \\
+            &= I
+        \end{split}
+    \]
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    A function $f$ is convex on a given set $S$ iff for $\lambda \in [0, 1]$ and for all $x, y  \in S$, the following holds:
+    $$
+        f(\lambda x + (1- \lambda)y) \leq \lambda f(x) + (1 - \lambda) f(y)
+    $$
+    Moreover, a univariate function $f(x)$ is convex on a set $S$ iff its second derivative $f''(x)$ is non-negative everywhere in the set. Prove the following assertions:
+    \begin{enumerate}
+        \item $f(x) = x^3$ is convex for $x \geq 0$
+        \item $f(x_1, x_2) = max(x_1,x_2)$ is convex on $\mathbb{R}$
+        \item If univeriate functions $f$ and $g$ are convex on $S$, then $f + g$ is convex on $S$
+        \item If univariate functions $f$ and $g$ are convex and non-negative on $S$, and have their minimum within $S$ at the same point, then $fg$ is convex on $S$
+    \end{enumerate}
+
+    \textbf{Solution}
+
+    1. $f(x)$ is a univariate function. Let us take the second derivative:
+    \[
+        \begin{split}
+            f(x) &= x^3
+            \\
+            f'(x) &= 2x^2
+            \\
+            f''(x) &= 6x
+            \\
+        \end{split}
+    \]
+    Given that $6x \geq 0$ for $x \geq 0$, then we can conclude that $f(x) = x^3$ is convex for $x \geq 0$.  \\
+    2. \\
+    3. Given that $f, g$ are univariate functions convex on $S$, then we also know that $f'',g'' \geq 0$ for all $x \in S$. Consider $h(x) = f(x) + g(x)$ for all $x \in S$. It follows that:
+    $$
+        h''(x) = f''(x) + g''(x)
+    $$
+    Since both $f'', g'' \geq 0$ by definition, then $h'' \geq 0$ or in words $h''$ is non-negative $\forall x \in S$. We can then conclude that $f + g$ is convex on set $S$. \\
+    4.
+    
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    The entropy of a categorical distribution on $K$ values is defined as $$H(p) = - \sum_{i=1}^K p_i log(p_i)$$
+    Using the method of Lagrange multipliers, find the categorical distribution that has the highest entropy. \\
+
+    \textbf{Solution} \\
+
+    A categorical distribution is a discrete probability distribution over a finite set of K distinct categories or values. We want to find the categorical distribution that maximizes its entropy. Entropy measures the uncertainty or disorder in a probability distribution. \\
+
+    The method of Lagrange Multipliers is used to find the maximum or minimum of a function subject to some constraints. Our constraint in this case is:
+    $$\sum_{i=1}^K p_i = 1$$
+
+    $\lambda$ (lambda) is the Lagrange multiplier associated with the constraint. Our goal is to maximize L with respect to the probabilities $p_1, p_2, ..., p_K$ and $\lambda$. To find the maximum, we set the partial derivatives of L with respect to each variable to zero (for each $p_i$ and $\lambda$ to enforce the constraint):
+
+    $$L(p, \lambda) = -\sum_{i=1}^K p_i \log(p_i) + \lambda \left(\sum_{i=1}^K p_i - 1\right)$$
+
+    $$\frac{\partial L}{\partial p_i} = -\log(p_i) - 1 + \lambda = 0$$
+
+    $$\frac{\partial L}{\partial \lambda} = \sum_{i=1}^K p_i - 1 = 0$$
+
+    From the $\lambda$ equation:
+
+    $$\sum_{i=1}^K p_i = 1$$
+
+    From the $p_i$ equation:
+
+    $$p_i = e^{-(\lambda + 1)}$$
+
+Since the probabilities must sum to 1, we have:
+
+$$K \cdot e^{-(\lambda + 1)} = 1$$
+
+Solving for $\lambda$:
+
+$$\lambda = -1 - \log\left(\frac{1}{K}\right) = \log(K) - 1$$
+
+Substituting for $\lambda$:
+
+$$p_i = e^{-(\log(K) - 1)} = \frac{1}{K}$$
+
+We can conclude that the categorical distribution that maximizes entropy is uniform distribution. This makes sense, since all the categories are equally likely:
+
+$$p_i = \frac{1}{K}$$
+
+
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    Consider a linear regression problem in which we want to weight different training examples differently. Specifically, suppose we want to minimize:
+    $$
+        J(\theta) = \frac{1}{2} \sum_{i=1}^m w^{(i)} (\theta^Tx^{(i)} - y^{(i)} )^2
+    $$
+
+    \textbf{Part A} \\
+    Show that $J(\theta)$ can be written in the form:
+    $$
+        J(\theta) = (X\theta - y)^TW(X\theta - y)
+    $$
+    for an appropriate diagonal matrix $W$, where $X$ is the $m \times d$ input matrix and $y$ is a $m \times 1$ vector denoting the associated outputs. State clearly what $W$ is. \\
+
+    \textbf{Solution}
+    \\
+    
+    We can express \(X\theta - y\):
+    \[
+    X\theta - y = \begin{bmatrix}
+        \theta^T x^{(1)} - y^{(1)} \\
+        \theta^T x^{(2)} - y^{(2)} \\
+        \vdots \\
+        \theta^T x^{(m)} - y^{(m)}
+    \end{bmatrix} = \begin{bmatrix}
+        \theta^T x^{(1)} \\
+        \theta^T x^{(2)} \\
+        \vdots \\
+        \theta^T x^{(m)}
+    \end{bmatrix} - \begin{bmatrix}
+        y^{(1)} \\
+        y^{(2)} \\
+        \vdots \\
+        y^{(m)}
+    \end{bmatrix}
+    \]
+    
+    We can rewrite \(J(\theta)\) as follows:
+    \[J(\theta) = \frac{1}{2} \left(X\theta - y\right)^T \text{diag}(w) \left(X\theta - y\right)\]
+    
+    Here, \(\text{diag}(w)\) represents a diagonal matrix with the weights \(w^{(i)}\) on the diagonal:
+    \[\text{diag}(w) = \begin{bmatrix}
+        w^{(1)} & 0 & \cdots & 0 \\
+        0 & w^{(2)} & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & w^{(m)}
+    \end{bmatrix}\]
+    
+    Now, let's perform the matrix multiplications and transpose:
+    \[\begin{aligned}
+    J(\theta) &= \frac{1}{2} \left(X\theta - y\right)^T \text{diag}(w) \left(X\theta - y\right) \\
+    &= \frac{1}{2} \left(\begin{bmatrix}
+        \theta^T x^{(1)} - y^{(1)} \\
+        \theta^T x^{(2)} - y^{(2)} \\
+        \vdots \\
+        \theta^T x^{(m)} - y^{(m)}
+    \end{bmatrix}\right)^T \begin{bmatrix}
+        w^{(1)} & 0 & \cdots & 0 \\
+        0 & w^{(2)} & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & w^{(m)}
+    \end{bmatrix} \begin{bmatrix}
+        \theta^T x^{(1)} - y^{(1)} \\
+        \theta^T x^{(2)} - y^{(2)} \\
+        \vdots \\
+        \theta^T x^{(m)} - y^{(m)}
+    \end{bmatrix} \\
+    \end{aligned}\]
+    
+    Now, we have the expression in the desired form, where \(W\) is a diagonal matrix:
+    \[J(\theta) = (X\theta - y)^T \text{diag}(w) (X\theta - y)\]
+    
+    So, \(W\) is a diagonal matrix where the diagonal elements are the weights \(w^{(i)}\):
+    \[W = \text{diag}(w) = \begin{bmatrix}
+        w^{(1)} & 0 & \cdots & 0 \\
+        0 & w^{(2)} & \cdots & 0 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & \cdots & w^{(m)}
+    \end{bmatrix}\]
+    
+    \textbf{Part B} \\
+    If all the $w^{(i)}$'s are equal to $1$, the normal equation to solve for the parameter $\theta$ is:
+    $$
+        X^TX\theta = X^Ty
+    $$
+    and the values of $\theta$ that minimizes $J(\theta)$ is $(X^TX)^{-1}X^Ty$. By computing the derivative of the weighted $J(\theta)$ and setting it equal to zero, generalize the normal equation to the weighted setting and solve for $\theta$ in closed form in terms of $W$, $X$, and $y$. \\
+
+    \textbf{Solution}
+    \\
+    To generalize the normal equation to the weighted setting and solve for \(\theta\) in closed form in terms of \(W\), \(X\), and \(y\), we will compute the derivative of \(J(\theta)\) with respect to \(\theta\) and set it equal to zero:
+    
+    \[\begin{aligned}
+    \frac{\partial J(\theta)}{\partial \theta} &= \frac{\partial}{\partial \theta} \left(\frac{1}{2} \sum_{i=1}^m w^{(i)} (\theta^T x^{(i)} - y^{(i)})^2\right) \\
+    &= \frac{1}{2} \sum_{i=1}^m 2w^{(i)} (\theta^T x^{(i)} - y^{(i)}) \frac{\partial}{\partial \theta}(\theta^T x^{(i)} - y^{(i)}) \\
+    &= \sum_{i=1}^m w^{(i)} (\theta^T x^{(i)} - y^{(i)}) x^{(i)}
+    \end{aligned}\]
+    
+    Setting the derivative equal to zero and solve for \(\theta\):
+    
+    \[\begin{aligned}
+    0 &= \sum_{i=1}^m w^{(i)} (\theta^T x^{(i)} - y^{(i)}) x^{(i)} \\
+    0 &= \sum_{i=1}^m w^{(i)} (\theta^T x^{(i)} x^{(i)} - y^{(i)} x^{(i)}) \\
+    0 &= \sum_{i=1}^m w^{(i)} \theta^T x^{(i)} x^{(i)} - \sum_{i=1}^m w^{(i)} y^{(i)} x^{(i)} \\
+    0 &= X^T W X \theta - X^T W y \\
+    \theta &= (X^T W X)^{-1} X^T W y
+    \\
+    \end{aligned}\]
+    
+    \textbf{Part C} \\
+    To predict the target value for an input vector $x$, one choice for the weighting functions $w^{(i)}$ is:
+    $$
+        w^{(i)} = exp \left( - \frac{(x-x^{(i)})^T(x-x^{(i)})}{2\tau^2} \right)
+    $$
+    Points near $x$ are weighted more heavily than points far away from $x$. The parameter $\tau$ is a bandwidth defining the sphere of influence around $x$. Note how the weights are defined by the input $x$. Write down an algorithm for calculating $\theta$ by gradient descent for locally weighted linear regression. Is locally weighted linear regression a parametric or a non-parametric method? \\
+
+    \textbf{Solution}
+    \\
+    Locally weighted linear regression is a non-parametric method since it does not assume a set relationship between the input and the target variable. It adapts the model based on the structure of the data, weighting data points that are closer more heavily.
+
+    To use locallly weighted lienar regression with gradient descent, coefficient vector $\theta$ needs to be adjusted based on minimizing the cost function $J(\theta)$:
+    \begin{enumerate}
+        \item Initialize $\theta$ to random values
+        \item Choose learning rate $\alpha$ and a convergence criteria
+        \item Repeat the following until convergence:
+        \begin{algorithmic}[1]
+            \Function{Gradient-Descent-On-LWLR}{$initial, \alpha, iterations$}
+                \State Initialize $\theta$ to $initial$ \Comment{Initialize model parameters}
+                \State $m \gets$ number of training examples
+                \Repeat
+                    \For{$i$ from $1$ to $m$} \Comment{For each training example}
+                        \State $w^{(i)} = \exp \left( - \frac{(x-x^{(i)})^T(x-x^{(i)})}{2\tau^2} \right)$
+                        \State $\delta^{(i)} = w^{(i)} (\theta^Tx^{(i)} - y^{(i)})$
+                        \State $\theta_j = \theta_j - \frac{\alpha}{m} \sum_{i=1}^m \delta^{(i)} x_j^{(i)}$
+                    \EndFor
+                \Until{convergence or $iterations$ reached}
+                \State \Return $\theta$ \Comment{Final model parameters}
+            \EndFunction
+        \end{algorithmic}
+    \end{enumerate}
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    An estimator of an unknown parameter is called unbiased if its expected value equals the true value of the parameter. Here, you will  prove that the least-squares estimate  given by the normal equation for linear regression is an unbiased estimate of the true  parameter $\theta^*$. We first assume that the data:
+    $$
+        D = \{x^{(i)}, y^{(i)}|1 \geq i \geq m; x^{(i)} \in \mathbb{R}^d; y^{(i)} \in \mathbb{R}\}
+    $$
+    comes from the linear model:
+    $$
+        y^{(i)} = \theta^T x^{(i)} + \epsilon^{(i)}
+    $$
+    where each $e^{(i)}$ is an independent random variable drawn from a normal distribution with zero mean and variance $\sigma^2$ . When considering the bias of an estimator, we treat the input $x^{(i)}$'s as fixed but arbitrary, and the true parameter vector $\theta^*$ as fixed but unknown. Expectations are taken over possible realizations of the output values $y^{(i)}$'s. \\
+
+    \textbf{Part A} \\
+    Show that $E[\theta] = \theta^*$ for the least squares estimator.\\
+
+    \textbf{Solution}
+    \\
+    The goal is to show that \(E[\hat{\theta}] = \theta^*\). This is $\hat{\theta}$:
+
+    \[\begin{aligned}
+    \hat{\theta} &= (X^TX)^{-1}X^TY
+    \\
+    E[\hat{\theta}] &= E[(X^TX)^{-1}X^TY] \\
+    E[\hat{\theta}] &= (X^TX)^{-1}X^TE[Y]\\
+    \end{aligned}\]
+
+    Since \(X\) and \(Y\) are fixed (but random), we can move them outside the expectation. Since $\epsilon^{(i)} \sim \mathcal{N}(0, \sigma^2)$:
+
+    \[
+    E[Y] = E[\theta^TX + \epsilon] = \theta^TX + E[\epsilon] = \theta^TX
+    \]
+
+    Substituting for $E[Y]$:
+
+    \[\begin{aligned}
+    E[\hat{\theta}] &= (X^TX)^{-1}X^T\theta^TX\\
+    E[\hat{\theta}] &= (X^TX)^{-1}X^TX\theta \\
+    E[\hat{\theta}] &= \theta \\
+    \end{aligned}\]
+    
+    \textbf{Part B} \\
+    Show that the variance of the least squares estimator is $Var(\theta) = (X^TX)^{-1}\sigma^2$. \\
+
+    \textbf{Solution}
+    \\
+    The goal is to show \(Var(\theta) = (X^TX)^{-1}\sigma^2\).  This is $\hat{\theta}$:
+
+    \[\begin{aligned}
+    \hat{\theta} &= (X^TX)^{-1}X^TY
+    \\
+    Var[\hat{\theta}] &= Var[(X^TX)^{-1}X^TY] \\
+    Var[\hat{\theta}] &= (X^TX)^{-1}X^TVar[Y]((X^TX)^{-1}X^T)^T\\
+    Var[\hat{\theta}] &= (X^TX)^{-1}X^TVar[Y]X(X^TX)^{-1}\\
+    \end{aligned}\]
+
+    Since \(X\) and \(Y\) are fixed (but random), we can move them outside the expectation. Since $\epsilon^{(i)} \sim \mathcal{N}(0, \sigma^2)$:
+    \[
+    Var(Y) = Var(\theta^TX + \epsilon) = Var(\epsilon) = \sigma^2
+    \]
+
+    Substituting for $E[Y]$:
+    \[\begin{aligned}
+    Var[\hat{\theta}] &= (X^TX)^{-1}X^T\sigma^2X(X^TX)^{-1}\\
+    Var[\hat{\theta}] &= (X^TX)^{-1}\sigma^2\\
+    \end{aligned}\]
+    
+\end{homeworkProblem}
+
+\begin{homeworkProblem}
+    See \textbf{ex1.ipynb}
+\end{homeworkProblem}
+
+\end{document}
