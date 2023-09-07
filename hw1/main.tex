@@ -402,13 +402,47 @@ See \textbf{sampler.ipynb}
         \end{split}
     \]
     Given that $6x \geq 0$ for $x \geq 0$, then we can conclude that $f(x) = x^3$ is convex for $x \geq 0$.  \\
-    2. \\
+    2.  Consider \(\lambda f(x) + (1 - \lambda) f(y)\):
+    \[
+    \begin{split}
+    \lambda f(x) + (1 - \lambda) f(y) &= \lambda \max(x, y) + (1 - \lambda) \max(x, y) \quad \text{[Using the definition of } f(x_1, x_2)\text{]} \\
+    &= \max(\lambda x, \lambda y) + \max((1 - \lambda) x, (1 - \lambda) y) \\
+    &= \begin{cases}
+    \lambda x & \text{if } \lambda x \geq \lambda y \\
+    \lambda y & \text{if } \lambda x < \lambda y
+    \end{cases}
+    + \begin{cases}
+    (1 - \lambda) x & \text{if } (1 - \lambda) x \geq (1 - \lambda) y \\
+    (1 - \lambda) y & \text{if } (1 - \lambda) x < (1 - \lambda) y
+    \end{cases}
+    \end{split}
+    \]
+    
+    Now, we have two cases to consider. If \(\lambda x \geq \lambda y\) and \((1 - \lambda) x \geq (1 - \lambda) y\), then:
+    \[
+    \begin{split}
+    \lambda f(x) + (1 - \lambda) f(y) &= \lambda x + (1 - \lambda) x \quad \text{[Both } \lambda x \geq \lambda y \text{ and } (1 - \lambda) x \geq (1 - \lambda) y\text{]} \\
+    &= x
+    \end{split}
+    \]
+
+    If either \(\lambda x < \lambda y\) or \((1 - \lambda) x < (1 - \lambda) y\), then:
+    \[
+    \begin{split}
+    \lambda f(x) + (1 - \lambda) f(y) &= \lambda y + (1 - \lambda) y \quad \text{[Either } \lambda x < \lambda y \text{ or } (1 - \lambda) x < (1 - \lambda) y\text{]} \\
+    &= y
+    \end{split}
+    \]
+
+    We can conclude for \(\lambda \in [0, 1]\) and for all \(x, y \in \mathbb{R}\), the inequality holds and the function \(f(x_1, x_2) = \max(x_1, x_2)\) is convex on \(\mathbb{R}\):
+    \[f(\lambda x + (1 - \lambda) y) \leq \lambda f(x) + (1 - \lambda) f(y)\]
+    \\
     3. Given that $f, g$ are univariate functions convex on $S$, then we also know that $f'',g'' \geq 0$ for all $x \in S$. Consider $h(x) = f(x) + g(x)$ for all $x \in S$. It follows that:
     $$
         h''(x) = f''(x) + g''(x)
     $$
     Since both $f'', g'' \geq 0$ by definition, then $h'' \geq 0$ or in words $h''$ is non-negative $\forall x \in S$. We can then conclude that $f + g$ is convex on set $S$. \\
-    4.
+    4. Given that functions $f, g$ are convex and non-negative on $S$, then we know that $f, g$ is also non-negative on $S$. This follows from the fact that $f,g$ minimums are $\geq 0$. This means that $f,g$ at its lowest possible convex point is 0. We can then conclude that $f, g$ is convex.
     
 \end{homeworkProblem}
 
