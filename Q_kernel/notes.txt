@@ -1,0 +1,24 @@
+##### START YOUR CODE
+s = 1.5 # kernel width (play with this parameter)
+
+# build the kernel matrix with the kmeans cluster centers (2 lines of code)
+pairwise_distances = cdist(X, kmeans.cluster_centers_, metric='euclidean')
+K = np.exp(-pairwise_distances ** 2 / (2 * s ** 2))
+
+# build a logistic model on the kernel matrix (2 lines of code)
+print(K.shape, y.shape) # (200, 30) (200,)
+logistic_regression_model = LogisticRegression()
+logistic_regression_model.fit(K, y)
+
+# build a kernel representation of the test points with the kmeans cluster centers (2 lines of code)
+print(test_points.shape, kmeans.cluster_centers_.shape) # (2500, 2) (30, 2)
+pairwise_distances = cdist(test_points, kmeans.cluster_centers_, metric='euclidean')
+test_kernel_matrix = np.exp(-pairwise_distances ** 2 / (2 * s ** 2))
+
+# Predict probabilities on the testpoints (1 line of code)
+Z = logistic_regression_model.predict_proba(test_kernel_matrix)
+print(Z.shape, xx.shape) # (2500, 2) (50, 50)
+
+##### END YOUR CODE
+
+Z = Z.reshape(xx.shape)
